@@ -18,11 +18,9 @@ app.get("/about",(req,res)=>{
     res.send("About Page");
 });
 app.post("/",(req,res)=>{
-    const form_input=req.body;
-    tasks.push(form_input);
-    console.log(form_input);
+    const { taskName, dueDate } = req.body;
+    tasks.push({ taskName, dueDate });
     res.redirect("/");
-    console.log(tasks);
 });
 app.get("/delete/:id",(req,res)=>{
     tasks.splice(req.params.id,1);
