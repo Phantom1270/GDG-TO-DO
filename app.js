@@ -19,23 +19,18 @@ app.get("/about",(req,res)=>{
 });
 app.post("/",(req,res)=>{
     const { taskName, dueDate } = req.body;
-    tasks.push({ taskName, dueDate });
+    tasks.push({ taskName, dueDate ,done:false});
     res.redirect("/");
 });
 app.get("/delete/:id",(req,res)=>{
     tasks.splice(req.params.id,1);
     res.redirect("/");
 });
-
-
-
-
-//ejs-- embeded java script 
-
-
-
-
-
+app.post("/toggle-done/:id", (req, res) => {
+  const id = req.params.id;
+  tasks[id].done = !tasks[id].done; 
+  res.sendStatus(200); 
+});
 
 app.listen(3000,()=>{
     console.log("Server started at port 3000");
