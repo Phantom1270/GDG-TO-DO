@@ -25,19 +25,16 @@ document.addEventListener("DOMContentLoaded", () => {
       const index = checkbox.dataset.index;
 
       fetch(`/toggle-done/${index}`, { method: "POST" });
-      
-      if (checkbox.checked) {
-        checkbox.parentElement.querySelector(".task-name").style.textDecoration = "line-through";
-      } else {
-        checkbox.parentElement.querySelector(".task-name").style.textDecoration = "none";
-      }
+
+      const taskName = checkbox.parentElement.querySelector(".task-name");
+      taskName.classList.toggle("completed", checkbox.checked);
     });
-});
-checkboxes.forEach((checkbox) => {
-  const taskName = checkbox.parentElement.querySelector(".task-name");
-  if (checkbox.checked) {
-    taskName.classList.add("completed");
-  }
-});
+  });
+  checkboxes.forEach((checkbox) => {
+    const taskName = checkbox.parentElement.querySelector(".task-name");
+    if (checkbox.checked) {
+      taskName.classList.add("completed");
+    }
+  });
 
 });

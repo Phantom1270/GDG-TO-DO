@@ -196,3 +196,15 @@ body, input, button {
   transform: translate(-50%, -50%);
 }
 
+.filter-container {
+  margin: 10px auto 20px;
+  text-align: center;
+}
+
+.filter-select {
+  padding: 6px 6px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+  cursor: pointer;
+}

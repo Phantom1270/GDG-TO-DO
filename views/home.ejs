@@ -12,7 +12,7 @@
   <h1>TO DO LIST</h1>
   <button id="theme-toggle" class="theme-toggle">🌙 Dark Mode</button>
   <div class="todo-input-grid">
-    <form action="/" method="post" class="form-container">
+    <form action="/?sort=<%= currentSort %>" method="post" class="form-container">
       <div></div>
       <input type="text" name="taskName" id="" placeholder="Todo Name" class="js-name-input name-input">
       <input type="date" name="dueDate" class="js-due-date-input due-date-input">
@@ -23,6 +23,14 @@
         <option value="High">High</option>
       </select>
       <button type="submit" class="add-todo-button js-add-todo-button">Add</button>
+      <div class="filter-container">
+        <label for="filter">Sort by:</label>
+        <select id="filter" class="filter-select">
+          <option value="time" <%=currentSort==="time" ? "selected" : "" %>>Time</option>
+          <option value="priority" <%=currentSort==="priority" ? "selected" : "" %>>Priority</option>
+        </select>
+      </div>
+
     </form>
     <br>
     <br>
@@ -36,18 +44,32 @@
               <div class="task-date">
                 <%= task.dueDate %>
               </div>
-              <div class="task-status" data-due-date="<%= task.dueDate %>" data-due-time="<%= task.dueTime %>"></div>
+              <div class="task-status" data-due-date="<%= task.dueDate %>" data-due-time="<%= task.dueTime %>">
+                Loading...</div>
               <div class="task-priority <%= task.priority.toLowerCase() %>">
                 <%= task.priority %>
               </div>
-              <button class="delete-todo-button">
-                <a style="color:white; text-decoration:none;" href="/delete/<%= index %>">Delete</a>
-              </button>
+              <form action="/delete/<%= index %>" method="get" style="display:inline;">
+                <input type="hidden" name="sort" value="<%= currentSort %>">
+                <button type="submit" class="delete-todo-button">Delete</button>
+              </form>
+
         </div>
         <% }) %>
     </div>
     <script src="/scripts/theme.js"></script>
     <script src="/scripts/time.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const filterSelect = document.getElementById("filter");
+
+        filterSelect.addEventListener("change", () => {
+          const value = filterSelect.value;
+          window.location.href = "/?sort=" + value;
+        });
+      });
+    </script>
+
 </body>
 
 </html>
