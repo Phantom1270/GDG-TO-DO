@@ -3,7 +3,6 @@ const ejs = require("ejs");
 const bodyParser = require("body-parser");
 const app = express();
 
-
 let tasks = [];
 
 app.set("view engine", "ejs");
@@ -18,18 +17,15 @@ app.get("/", (req, res) => {
         const now = new Date();
 
         sortedTasks.sort((a, b) => {
-            // Completed always at bottom
             if (a.done && !b.done) return 1;
             if (!a.done && b.done) return -1;
 
             const aDate = new Date(`${a.dueDate}T${a.dueTime}`);
             const bDate = new Date(`${b.dueDate}T${b.dueTime}`);
 
-            // Overdue at top
             if (aDate < now && bDate >= now) return -1;
             if (bDate < now && aDate >= now) return 1;
 
-            // Otherwise sort by nearest deadline
             return aDate - bDate;
         });
     }
@@ -50,23 +46,28 @@ app.get("/", (req, res) => {
 app.get("/about", (req, res) => {
     res.send("About Page");
 });
+
 app.post("/", (req, res) => {
     const { taskName, dueDate, dueTime, priority } = req.body;
     tasks.push({ taskName, dueDate, dueTime, priority, done: false });
     const sort = req.query.sort || "time";
     res.redirect("/?sort=" + sort);
 });
+
 app.get("/delete/:id", (req, res) => {
     tasks.splice(req.params.id, 1);
     const sort = req.query.sort || "time";
     res.redirect("/?sort=" + sort);
 });
+
 app.post("/toggle-done/:id", (req, res) => {
     const id = req.params.id;
     tasks[id].done = !tasks[id].done;
     res.sendStatus(200);
 });
 
-app.listen(3000, () => {
-    console.log("Server started at port 3000");
+// Use Render-provided port or fallback to 3000 locally
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+    console.log(`Server started at port ${PORT}`);
 });
