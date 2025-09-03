@@ -32,4 +32,12 @@ document.addEventListener("DOMContentLoaded", () => {
         checkbox.parentElement.querySelector(".task-name").style.textDecoration = "none";
       }
     });
-})});
+});
+checkboxes.forEach((checkbox) => {
+  const taskName = checkbox.parentElement.querySelector(".task-name");
+  if (checkbox.checked) {
+    taskName.classList.add("completed");
+  }
+});
+
+});

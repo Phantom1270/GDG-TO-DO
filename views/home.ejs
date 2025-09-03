@@ -17,25 +17,37 @@
       <input type="text" name="taskName" id="" placeholder="Todo Name" class="js-name-input name-input">
       <input type="date" name="dueDate" class="js-due-date-input due-date-input">
       <input type="time" name="dueTime" class="js-due-time-input due-time-input">
+      <select name="priority" class="priority-select">
+        <option value="Low">Low</option>
+        <option value="Medium">Medium</option>
+        <option value="High">High</option>
+      </select>
       <button type="submit" class="add-todo-button js-add-todo-button">Add</button>
     </form>
     <br>
     <br>
-<div class="todo-grid">
-  <% taskList.forEach((task,index)=> { %>
-    <div class="todo-item">
-      <input type="checkbox" class="task-checkbox" 
-         <% if (task.done) { %> checked <% } %> data-index="<%= index %>">
-      <div class="task-name"><%= task.taskName %></div> 
-      <div class="task-date"><%= task.dueDate %></div>
-      <div class="task-status" data-due-date="<%= task.dueDate %>" data-due-time="<%= task.dueTime %>"></div>
-      <button class="delete-todo-button">
-        <a style="color:white; text-decoration:none;" href="/delete/<%= index %>">Delete</a>
-      </button>
+    <div class="todo-grid">
+      <% taskList.forEach((task,index)=> { %>
+        <div class="todo-item">
+          <input type="checkbox" class="task-checkbox" <% if (task.done) { %> checked <% } %> data-index="<%= index %>">
+              <div class="task-name">
+                <%= task.taskName %>
+              </div>
+              <div class="task-date">
+                <%= task.dueDate %>
+              </div>
+              <div class="task-status" data-due-date="<%= task.dueDate %>" data-due-time="<%= task.dueTime %>"></div>
+              <div class="task-priority <%= task.priority.toLowerCase() %>">
+                <%= task.priority %>
+              </div>
+              <button class="delete-todo-button">
+                <a style="color:white; text-decoration:none;" href="/delete/<%= index %>">Delete</a>
+              </button>
+        </div>
+        <% }) %>
     </div>
-  <% }) %>
-</div>
-<script src="/scripts/theme.js"></script>
-<script src="/scripts/time.js"></script>
+    <script src="/scripts/theme.js"></script>
+    <script src="/scripts/time.js"></script>
 </body>
+
 </html>

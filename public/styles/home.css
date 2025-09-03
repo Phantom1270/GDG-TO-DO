@@ -80,7 +80,7 @@ h1 {
 }
 .todo-item {
   display: grid;
-  grid-template-columns: 40px 200px 150px 120px 100px; /* same as .todo-grid */
+  grid-template-columns: 40px 200px 150px 120px 100px 100px; /* same as .todo-grid */
   gap: 10px;
   align-items: center;
   margin-bottom: 10px;
@@ -150,3 +150,49 @@ body, input, button {
   border-color: #2ecc71;
   box-shadow: 0 0 4px rgba(46, 204, 113, 0.3);
 }
+
+.task-priority {
+  font-weight: bold;
+  padding: 5px 10px;
+  border-radius: 6px;
+  text-align: center;
+}
+.task-priority.low {
+  background: #d4edda;
+  color: #155724;
+}
+.task-priority.medium {
+  background: #fff3cd;
+  color: #856404;
+}
+.task-priority.high {
+  background: #f8d7da;
+  color: #721c24;
+}
+.task-checkbox {
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border: 2px solid #ccc;
+  border-radius: 50%; /* makes it circular */
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  transition: 0.2s;
+}
+
+.task-checkbox:checked {
+  background-color: #27ae60;
+  border-color: #27ae60;
+}
+
+.task-checkbox:checked::after {
+  content: "✓";
+  color: white;
+  font-size: 14px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
