@@ -7,14 +7,15 @@
   <link rel="stylesheet" href="/styles/auth.css">
 </head>
 <body>
-  <div class="auth-container">
+  <div class="auth-container login-container">
     <h1>Login</h1>
-    <form action="/login" method="post">
-      <input type="text" name="userId" placeholder="User ID" required>
-      <input type="password" name="password" placeholder="Password" required>
-      <button type="submit">Login</button>
-    </form>
-    <a style="color: black;" href="/register">Don't have an account? Register</a>
+   <form class="form-container login-form" action="/login" method="post">
+  <input type="text" name="userId" placeholder="User ID" required>
+  <input type="password" name="password" placeholder="Password" required>
+  <button type="submit">Login</button>
+</form>
+
+    <a class="register-link" href="/register">Don't have an account? Register</a>
   </div>
 </body>
 </html>
