@@ -10,9 +10,14 @@
 
 <body>
   <h1>TO DO LIST</h1>
-  <button id="theme-toggle" class="theme-toggle">🌙 Dark Mode</button>
+  <div style="display: flex; float:right; margin-right:20px;">
+    <form action="/logout" method="get" style=" float:right; margin-right:20px;">
+      <button type="submit" class="logout-button">Logout</button>
+    </form>
+    <button id="theme-toggle" class="theme-toggle">🌙 Dark Mode</button>
+  </div>
   <div class="todo-input-grid">
-    <form action="/?sort=<%= currentSort %>" method="post" class="form-container">
+    <form action="/user/<%= userId %>/add?sort=<%= currentSort %>" method="post" class="form-container">
       <div></div>
       <input type="text" name="taskName" id="" placeholder="Todo Name" class="js-name-input name-input">
       <input type="date" name="dueDate" class="js-due-date-input due-date-input">
@@ -37,39 +42,68 @@
     <div class="todo-grid">
       <% taskList.forEach((task,index)=> { %>
         <div class="todo-item">
-          <input type="checkbox" class="task-checkbox" <% if (task.done) { %> checked <% } %> data-index="<%= index %>">
-              <div class="task-name">
-                <%= task.taskName %>
-              </div>
-              <div class="task-date">
-                <%= task.dueDate %>
-              </div>
-              <div class="task-status" data-due-date="<%= task.dueDate %>" data-due-time="<%= task.dueTime %>">
-                Loading...</div>
-              <div class="task-priority <%= task.priority.toLowerCase() %>">
-                <%= task.priority %>
-              </div>
-              <form action="/delete/<%= index %>" method="get" style="display:inline;">
-                <input type="hidden" name="sort" value="<%= currentSort %>">
-                <button type="submit" class="delete-todo-button">Delete</button>
-              </form>
+          <input type="checkbox" class="task-checkbox" data-task-id="<%= task.taskId %>" <% if(task.done){ %> checked <%
+            } %>>
+            <div class="task-name">
+              <%= task.taskName %>
+            </div>
+            <div class="task-date">
+              <%= task.dueDate %>
+            </div>
+            <div class="task-status" data-due-date="<%= task.dueDate %>" data-due-time="<%= task.dueTime %>">
+              Loading...</div>
+            <div class="task-priority <%= task.priority.toLowerCase() %>">
+              <%= task.priority %>
+            </div>
+            <form action="/user/<%= userId %>/delete/<%= task.taskId %>" method="get">
+              <input type="hidden" name="sort" value="<%= currentSort %>">
+              <button type="submit" class="delete-todo-button">Delete</button>
+            </form>
+
 
         </div>
         <% }) %>
     </div>
     <script src="/scripts/theme.js"></script>
     <script src="/scripts/time.js"></script>
-    <script src="/scripts/localStorageTasks.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        // Select all checkboxes
+        const checkboxes = document.querySelectorAll(".task-checkbox");
+
+        checkboxes.forEach(checkbox => {
+          checkbox.addEventListener("change", () => {
+            const taskId = checkbox.dataset.taskId;
+            const userId = "<%= userId %>";
+
+            fetch(`/user/${userId}/toggle-done/${taskId}`, {
+              method: "POST"
+            })
+              .then(res => {
+                if (!res.ok) {
+                  alert("Failed to update task status");
+                }
+              })
+              .catch(err => {
+                console.error(err);
+                alert("Error updating task status");
+              });
+          });
+        });
+      });
+    </script>
     <script>
       document.addEventListener("DOMContentLoaded", () => {
         const filterSelect = document.getElementById("filter");
 
         filterSelect.addEventListener("change", () => {
           const value = filterSelect.value;
-          window.location.href = "/?sort=" + value;
+          window.location.href = `/user/<%= userId %>?sort=${value}`;
         });
       });
     </script>
+
+
 
 </body>
 
