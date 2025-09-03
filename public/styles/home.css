@@ -29,13 +29,13 @@ h1 {
 
 
 .todo-grid {
-  display: grid;
-  grid-template-columns: 40px 200px 150px 100px;
+  display: flex;
+  flex-direction: column;
   gap: 10px;
   margin: 0 auto;
-  max-width: 600px;
-  align-items: center;
+  max-width: 700px;
 }
+
 
 .name-input,.due-date-input{
   padding: 10px;
@@ -79,7 +79,12 @@ h1 {
   background-color: #c0392b;
 }
 .todo-item {
-  display: contents; 
+  display: grid;
+  grid-template-columns: 40px 200px 150px 120px 100px; /* same as .todo-grid */
+  gap: 10px;
+  align-items: center;
+  margin-bottom: 10px;
+  padding: 5px 0;
 }
 .todo-item div {
   padding: 8px 0;
@@ -131,4 +136,17 @@ body, input, button {
 .task-name.completed {
   text-decoration: line-through;
   color: gray;
+}
+.due-time-input {
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  outline: none;
+  transition: 0.2s;
+}
+
+.due-time-input:focus {
+  border-color: #2ecc71;
+  box-shadow: 0 0 4px rgba(46, 204, 113, 0.3);
 }

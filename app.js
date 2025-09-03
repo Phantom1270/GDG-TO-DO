@@ -18,8 +18,8 @@ app.get("/about",(req,res)=>{
     res.send("About Page");
 });
 app.post("/",(req,res)=>{
-    const { taskName, dueDate } = req.body;
-    tasks.push({ taskName, dueDate ,done:false});
+    const { taskName, dueDate ,dueTime} = req.body;
+    tasks.push({ taskName, dueDate,dueTime ,done:false});
     res.redirect("/");
 });
 app.get("/delete/:id",(req,res)=>{
