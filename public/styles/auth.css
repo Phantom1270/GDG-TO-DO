@@ -1,4 +1,6 @@
 /* auth.css */
+
+
 body {
   font-family: Arial, Helvetica, sans-serif;
   background: #f4f6f8;
@@ -7,10 +9,14 @@ body {
   align-items: center;
   min-height: 100vh;
   margin: 0;
+  background-image: url("/assets/wall-clock-indoors-still-life.jpg");
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
 }
 
 .auth-container {
-  background: white;
+  background: rgba(255, 255, 255, 0.39);
   padding: 30px 40px;
   border-radius: 12px;
   box-shadow: 0 5px 20px rgba(0,0,0,0.1);
