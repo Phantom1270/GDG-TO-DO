@@ -10,7 +10,6 @@ function updateTaskStatus() {
     const diff = dueDateTime - now; // difference in ms
 
     if (diff > 0) {
-      // calculate hours and minutes left
       const hours = Math.floor(diff / (1000 * 60 * 60));
       const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
       statusDiv.textContent = `Due in ${hours}h ${minutes}m`;
@@ -22,6 +21,8 @@ function updateTaskStatus() {
   });
 }
 
-// update every minute
-updateTaskStatus();
+// Update every minute
 setInterval(updateTaskStatus, 60000);
+
+// Also run immediately after DOM loads
+document.addEventListener("DOMContentLoaded", updateTaskStatus);

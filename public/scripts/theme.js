@@ -1,7 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
   const toggleBtn = document.getElementById("theme-toggle");
   const body = document.body;
-  const checkboxes = document.querySelectorAll(".task-checkbox");
 
   if (localStorage.getItem("theme") === "dark") {
     body.classList.add("dark");
@@ -20,21 +19,32 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  checkboxes.forEach((checkbox) => {
-    checkbox.addEventListener("change", () => {
-      const index = checkbox.dataset.index;
+  function attachCheckboxEvents() {
+    const checkboxes = document.querySelectorAll(".task-checkbox");
 
-      fetch(`/toggle-done/${index}`, { method: "POST" });
+    checkboxes.forEach(checkbox => {
+      checkbox.addEventListener("change", () => {
+        const taskNameDiv = checkbox.parentElement.querySelector(".task-name");
+        if (checkbox.checked) {
+          taskNameDiv.classList.add("completed");
+        } else {
+          taskNameDiv.classList.remove("completed");
+        }
+      });
 
-      const taskName = checkbox.parentElement.querySelector(".task-name");
-      taskName.classList.toggle("completed", checkbox.checked);
+      // Apply initial completed state
+      const taskNameDiv = checkbox.parentElement.querySelector(".task-name");
+      if (checkbox.checked) {
+        taskNameDiv.classList.add("completed");
+      } else {
+        taskNameDiv.classList.remove("completed");
+      }
     });
-  });
-  checkboxes.forEach((checkbox) => {
-    const taskName = checkbox.parentElement.querySelector(".task-name");
-    if (checkbox.checked) {
-      taskName.classList.add("completed");
-    }
-  });
+  }
 
+  // Make this function global so localStorageTasks.js can call it after rendering tasks
+  window.attachCheckboxEvents = attachCheckboxEvents;
+
+  // Initial call
+  attachCheckboxEvents();
 });
